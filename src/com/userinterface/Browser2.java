@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 
 /**
  *
- * @author Alan Rodriguez
+ * @author Rosa Rodriguez
  */
 public class Browser2 extends javax.swing.JFrame {
     
