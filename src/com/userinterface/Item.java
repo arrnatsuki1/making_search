@@ -112,7 +112,6 @@ public class Item extends javax.swing.JDialog {
         text.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         textField.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        textField.setForeground(new java.awt.Color(0, 0, 0));
         textField.setLabelFor(text);
         text.add(textField, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 5, 420, 40));
 
