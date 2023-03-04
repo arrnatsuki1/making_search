@@ -56,7 +56,11 @@ public class Item extends javax.swing.JDialog {
         textField = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setAutoRequestFocus(false);
+        setFocusCycleRoot(false);
         setFocusable(false);
+        setFocusableWindowState(false);
         setMaximumSize(new java.awt.Dimension(500, 50));
         setMinimumSize(new java.awt.Dimension(500, 50));
         setUndecorated(true);

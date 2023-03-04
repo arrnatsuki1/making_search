@@ -38,9 +38,7 @@ public final class Control{
         paths = new ArrayList();
         
         //Aqui cambia las rutas o agrega mas lo ke kieras
-        addPath("E:\\Descargas");
-        addPath("E:\\Escritorio");
-        addPath("E:\\Documentos");
+        addPath("/home/rossopt/Downloads");
         
         //b es solo para cuando salga el primer item, tener la posicion del padre
         //para tener todo en orden
