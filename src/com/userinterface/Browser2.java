@@ -105,6 +105,7 @@ public class Browser2 extends javax.swing.JFrame {
             textField.setText(typed+evt.getKeyChar());
         }
         c.setFileName(textField.getText());
+        c.clearAll();
         c.makeSearch();
         this.requestFocus();
     }//GEN-LAST:event_formKeyPressed

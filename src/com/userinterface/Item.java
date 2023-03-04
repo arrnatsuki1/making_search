@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 public class Item extends javax.swing.JDialog {
 
     private final String itemText, path;
+    public static final Desktop desktop = Desktop.getDesktop();
+    
     
     /**
      * Creates new JDialog from a form
@@ -129,6 +131,11 @@ public class Item extends javax.swing.JDialog {
         return path.substring(0, index);
     }
     
+    public void destroy()
+    {
+        this.dispose();
+    }
+    
     private void textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textMouseClicked
         
         if( Desktop.isDesktopSupported() ) {
@@ -146,6 +153,19 @@ public class Item extends javax.swing.JDialog {
 
     private void iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconMouseClicked
 
+        String osname = System.getProperty("os.name");
+        String absolutePath = path.substring(0, path.lastIndexOf("/"));
+        System.out.println(path);
+        if ( osname.equalsIgnoreCase("Linux") ) {
+            
+            try {
+                desktop.open(new File(absolutePath));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            
+        }
+        
         try {
             Runtime.getRuntime().exec("explorer "+getPath());
         } catch (Exception e) {
