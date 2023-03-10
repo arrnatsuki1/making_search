@@ -18,13 +18,15 @@ public final class Control{
     private final ArrayList<File> paths;
     private final ArrayList<BrowserThread> browsers;
     
+    private ArrayList<File> files;
+    
     private final Browser2 b;
     /**
      * Crea los hilos que buscaran los archivos en los directorios espesificados
      */
     private void makeThreads() {
         for (int i = 0; i < countPath; i++) {
-            browsers.add(new BrowserThread( fileName, paths.get(i), case_insensitive ));
+            browsers.add(new BrowserThread( fileName, paths.get(i), case_insensitive, this));
             browsers.get(i).start();
         }
     }
@@ -38,13 +40,12 @@ public final class Control{
         paths = new ArrayList();
         
         //Aqui cambia las rutas o agrega mas lo ke kieras
-        addPath("E:\\Descargas");
-        addPath("E:\\Escritorio");
-        addPath("E:\\Documentos");
+        addPath("/home/rossopt/Downloads");
         
         //b es solo para cuando salga el primer item, tener la posicion del padre
         //para tener todo en orden
         this.b = b;
+        files = new ArrayList();
     }
     /**
      * Crea los hilos, si hay hilos en ejecucion los borra y crea nuevos
@@ -119,36 +120,46 @@ public final class Control{
     /**
      * Muestra los primeros maxOutput items en el buscador
      * crea las instancias de Item necesarias para mostrar
-     */    
+     */
+    
+    public synchronized void clearAll()
+    {
+        
+        if(!browsers.isEmpty()) {
+            for(Thread t : browsers) {
+                t.interrupt();
+            }
+        }
+        browsers.clear();
+        
+        if(!ls.isEmpty()) {
+            for(Item i : ls) {
+                i.destroy();
+            }
+        }
+        
+        ls.clear();
+        files.clear();
+    }
+    
+    public synchronized void addFile(File file) {
+        
+        this.files.add(file);
+        showFiles();
+    }
+    
     private ArrayList<Item> ls = new ArrayList();
     public void showFiles(){
-        //Limpia la lista en caso de que tena un objeto antes
-        clearLs();
-        ArrayList<File> tf = new ArrayList();
-        for(BrowserThread t : browsers){
-            tf.addAll(t.getFiles());
-        }
         Item last = null;
-        for (int i = 0; i < tf.size(); i++) {
+        for (int i = 0; i < files.size(); i++) {
             
             if (i == maxOutput) {
                 break;
             }
             
-            ls.add(new Item(b, false, tf.get(i).getName(), tf.get(i).getPath(), last));
+            ls.add(new Item(b, false, files.get(i).getName(), files.get(i).getPath(), last));
             last = ls.get(i);
         }
-    }
-    /**
-     * Borra todos los items que se hayan recabado
-     */
-    private void clearLs() {
-        if(ls.isEmpty())
-            return;
-        for(Item i : ls){
-            i.setVisible(false);
-        }
-        ls.clear();
     }
     
     /**

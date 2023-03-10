@@ -15,12 +15,14 @@ public class BrowserThread extends Thread{
     private final File path;
     private final boolean case_insensitive;
     private final ArrayList<File> files;
+    private final Control parent;
     
-    public BrowserThread(String lookfor, File path, boolean case_insensitive) {
+    public BrowserThread(String lookfor, File path, boolean case_insensitive, Control parent) {
         this.lookfor = lookfor;
         this.path = path;
         this.case_insensitive = case_insensitive;
         files = new ArrayList();
+        this.parent = parent;
     }
     
     @Override
@@ -54,7 +56,7 @@ public class BrowserThread extends Thread{
             }
             m = p.matcher(name);
             if(m.find()){
-                files.add(new File(path+"\\"+name));
+                parent.addFile(new File(path+"/"+name));
             }
         }
         
